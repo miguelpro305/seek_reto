@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./task-manager-backend
+    ports: ["8000:8000"]
+    env_file: ./task-manager-backend/.env
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - ./task-manager-backend:/usr/src/app
+    environment:
+      - PYTHONPATH=/usr/src/app
+
+  mongo:
+    image: mongo:6.0
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build: ./task-manager-frontend
+    ports: ["80:80"]
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
