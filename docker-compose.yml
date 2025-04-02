@@ -6,8 +6,7 @@ services:
     ports: ["8000:8000"]
     env_file: ./task-manager-backend/.env
     depends_on:
-      mongo:
-        condition: service_healthy
+      - mongo # Correct format, list of service names
     volumes:
       - ./task-manager-backend:/usr/src/app
     environment:
@@ -27,7 +26,7 @@ services:
     build: ./task-manager-frontend
     ports: ["80:80"]
     depends_on:
-      - backend
+      - backend # Correct format, list of service names
 
 volumes:
   mongodb_data:
