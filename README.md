@@ -11,4 +11,4 @@ https://github.com/miguelpro305/task-manager-frontend
 
 El proyecto se encuentra despelgado en:
 
-http://44.204.23.162
+http://54.174.26.163/
